@@ -28,8 +28,10 @@ def _urldata_(url, pageNum):
         # 对动态网页查询并使用pyquery进行分析
         doc = pq(browser.page_source)
         # 获取一个多个相同属性
+        htm = doc('[class="listItemBox clearfix"]')
+        print(htm)
         html = doc('[class="listItemBox clearfix"]').items()
-        print(html)
+
 
         listSum = []
         # 获取单个属性

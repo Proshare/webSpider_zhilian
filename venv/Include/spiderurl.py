@@ -17,8 +17,7 @@ def _urldata_(url, pageNum):
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
     browser = webdriver.Chrome(options=chrome_options)
-    # 睡觉一秒
-    time.sleep(1)
+
     browser.get(url)
 
     # # 定义一个大的列表将一个职位所有的招聘信息都放进去
@@ -28,8 +27,10 @@ def _urldata_(url, pageNum):
         # 对动态网页查询并使用pyquery进行分析
         doc = pq(browser.page_source)
         # 获取一个多个相同属性
+        # htm = doc('[class="listItemBox clearfix"]')
+        # print(htm)
         html = doc('[class="listItemBox clearfix"]').items()
-        print(type(html))
+
 
         listSum = []
         # 获取单个属性
@@ -57,6 +58,7 @@ def _urldata_(url, pageNum):
             for job in commpanyDesc:
                 company_info.append(job.text())
 
+
             # 获取更详细的信息
             job_welfare = tb('.welfare_item').items()
 
@@ -74,7 +76,7 @@ def _urldata_(url, pageNum):
             item['job_demand_info_age'] = job_demand_info[1]
             item['job_demand_info_back'] = job_demand_info[2]
             item['company_info_back'] = company_info[0]
-            item['company_info_number'] = company_info[1]
+
             item['job_welfare_info_list'] = job_welfare_info_list
 
             listSum.append(item)
@@ -90,5 +92,6 @@ def _urldata_(url, pageNum):
         time.sleep(p)
 
     return joblist
+    browser.quit()
 
 # _urldata_('https://sou.zhaopin.com/?pageSize=60&jl=530&kw=python&kt=3')
